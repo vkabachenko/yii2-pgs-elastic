@@ -51,6 +51,17 @@ $config = [
             ],
         ],
 
+        'elasticsearch' => [
+            'class' => \yii\elasticsearch\Connection::class,
+            'nodes' => [
+                ['http_address' => 'elasticsearch:9200'],
+                // configure more hosts if you have a cluster
+            ],
+            // set autodetectCluster to false if you don't want to auto detect nodes
+            // 'autodetectCluster' => false,
+            'dslVersion' => 6, // domain specific language. Corresponds with installed es version
+        ],
+
     ],
     'params' => $params,
 ];

@@ -7,6 +7,8 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    links:
+      - elasticsearch
   pgsql:
     domainname: pgsql
     image: postgres:alpine
@@ -31,3 +33,16 @@ services:
       - ./var/pgadmin-data:/var/lib/pgadmin
     links:
       - pgsql
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms128m -Xmx128m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./var/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
